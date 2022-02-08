@@ -4,10 +4,15 @@ import { firestore, convertCollectionsSnapShotToMap } from '../../firebase'
 export const getShopCollections = createAsyncThunk(
     'shopCollectionsFetch',
     async () => {
-        const collectionRef = firestore.collection('collections')
-        const snapshot = await collectionRef.get()
-        const collectionMap = convertCollectionsSnapShotToMap(snapshot)
-        return collectionMap
+        try {
+            const collectionRef = firestore.collection('collections')
+            const snapshot = await collectionRef.get()
+            const collectionMap = convertCollectionsSnapShotToMap(snapshot)
+            return collectionMap
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 )
 
