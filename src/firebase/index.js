@@ -22,29 +22,30 @@ googleProvider.setCustomParameters({ prompt: 'select_account' })
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider)
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
-    if (!userAuth) return
-
-    const userRef = firestore.doc(`users/${userAuth.uid}`)
-
-    const snapshot = await userRef.get()
-
-    if (!snapshot.exists) {
-        const { displayName, email } = userAuth
-        // const createdAt = new Date()
-        try {
-            await userRef.set({
-                displayName,
-                email,
-                // createdAt,
-                ...additionalData
-            })
+    try {
+        if (!userAuth) return
+        const userRef = firestore.doc(`users/${userAuth.uid}`)
+        const snapshot = await userRef.get()
+        if (!snapshot.exists) {
+            const { displayName, email } = userAuth
+            // const createdAt = new Date()
+            try {
+                await userRef.set({
+                    displayName,
+                    email,
+                    // createdAt,
+                    ...additionalData
+                })
+            }
+            catch (error) {
+                console.log('error creating user', error.message)
+            }
         }
-        catch (error) {
-            console.log('error creating user', error.message)
-        }
+        return userRef
     }
-
-    return userRef
+    catch (err) {
+        console.log(err);
+    }
 }
 
 export const convertCollectionsSnapShotToMap = (collections) => {
