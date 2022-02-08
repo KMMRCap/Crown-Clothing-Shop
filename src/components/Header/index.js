@@ -38,7 +38,7 @@ const Header = () => {
                     progress: undefined,
                 });
             }
-        })
+        }).catch(err => console.log(err))
     }
 
     return (

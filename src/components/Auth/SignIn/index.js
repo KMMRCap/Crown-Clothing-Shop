@@ -20,13 +20,13 @@ const SignIn = () => {
     const handleGoogleSignIn = () => {
         setLoading(true)
         dispatch(signInWithGoogle()).then(res => {
-            if (user.currentUser.id) {
+            if (user.currentUser?.id) {
                 setTimeout(() => {
                     navigate('/')
                 }, 1000)
             }
             else {
-                toast.error(user.currentUser.message, {
+                toast.error(user.currentUser?.message, {
                     position: "top-right",
                     autoClose: 2000,
                     hideProgressBar: false,
@@ -37,7 +37,7 @@ const SignIn = () => {
                 });
                 setLoading(false)
             }
-        })
+        }).catch(err => console.log(err))
     }
 
     return (
@@ -71,14 +71,14 @@ const SignIn = () => {
                 onSubmit={(values, { resetForm }) => {
                     setLoading(true)
                     dispatch(signInWithEmail(values)).then(res => {
-                        if (user.currentUser.id) {
+                        if (user.currentUser?.id) {
                             resetForm()
                             setTimeout(() => {
                                 navigate('/')
                             }, 1000)
                         }
                         else {
-                            toast.error(user.currentUser.message, {
+                            toast.error(user.currentUser?.message, {
                                 position: "top-right",
                                 autoClose: 2000,
                                 hideProgressBar: false,
@@ -89,7 +89,7 @@ const SignIn = () => {
                             });
                         }
                         setLoading(false)
-                    })
+                    }).catch(err => console.log(err))
                 }}
             >
                 <Form>

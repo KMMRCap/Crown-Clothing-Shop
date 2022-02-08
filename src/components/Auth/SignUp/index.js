@@ -62,14 +62,14 @@ const SignUp = () => {
                 onSubmit={async (values, { resetForm }) => {
                     setLoading(true)
                     dispatch(signUp(values)).then(res => {
-                        if (user.currentUser.id) {
+                        if (user.currentUser?.id) {
                             resetForm()
                             setTimeout(() => {
                                 navigate('/')
                             }, 1000)
                         }
                         else {
-                            toast.error(user.currentUser.message, {
+                            toast.error(user.currentUser?.message, {
                                 position: "top-right",
                                 autoClose: 2000,
                                 hideProgressBar: false,
@@ -80,7 +80,7 @@ const SignUp = () => {
                             });
                             setLoading(false)
                         }
-                    })
+                    }).catch(err => console.log(err))
                 }}
             >
                 <Form className='sign-up-form'>
