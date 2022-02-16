@@ -69,7 +69,7 @@ const SignUp = () => {
                             }, 1000)
                         }
                         else {
-                            toast.error(user.currentUser?.message, {
+                            toast.error(user.error?.message, {
                                 position: "top-right",
                                 autoClose: 2000,
                                 hideProgressBar: false,

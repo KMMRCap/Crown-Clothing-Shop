@@ -13,7 +13,7 @@ const CollectionsOverview = () => {
             {shop.fetching ?
                 <Spinner />
                 :
-                shop.collections ?
+                shop.collections && shop.collections.mens ?
                     Object.values(shop.collections).map(item => (
                         <PreviewCollections
                             key={item.id}

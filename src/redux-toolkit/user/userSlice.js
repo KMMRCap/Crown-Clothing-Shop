@@ -17,7 +17,7 @@ export const checkUserSession = createAsyncThunk(
             }
         }
         catch (err) {
-            return err
+            throw err
         }
     }
 )
@@ -35,7 +35,7 @@ export const signInWithEmail = createAsyncThunk(
             }
         }
         catch (err) {
-            return err
+            throw err
         }
     }
 )
@@ -53,7 +53,7 @@ export const signInWithGoogle = createAsyncThunk(
             }
         }
         catch (err) {
-            return err
+            throw err
         }
     }
 )
@@ -63,9 +63,10 @@ export const signOut = createAsyncThunk(
     async () => {
         try {
             await auth.signOut()
+            return 'success'
         }
         catch (err) {
-            return err
+            throw err
         }
     }
 )
@@ -75,7 +76,7 @@ export const signUp = createAsyncThunk(
     async ({ email, password, displayName }) => {
         try {
             const { user } = await auth.createUserWithEmailAndPassword(email, password)
-            const userRef = await createUserProfileDocument(user, {displayName})
+            const userRef = await createUserProfileDocument(user, { displayName })
             const userSnapshot = await userRef.get()
             return {
                 id: userSnapshot.id,
@@ -83,7 +84,7 @@ export const signUp = createAsyncThunk(
             }
         }
         catch (err) {
-            return err
+            throw err
         }
     }
 )
@@ -113,7 +114,7 @@ export const userSlice = createSlice({
         [checkUserSession.rejected]: (state, action) => {
             state.fetching = false
             state.currentUser = null
-            state.error = action.payload
+            state.error = action.error
         },
 
         // -----------------------------------
@@ -131,7 +132,7 @@ export const userSlice = createSlice({
         [signInWithEmail.rejected]: (state, action) => {
             state.fetching = false
             state.currentUser = null
-            state.error = action.payload
+            state.error = action.error
         },
 
         // -----------------------------------
@@ -149,7 +150,7 @@ export const userSlice = createSlice({
         [signInWithGoogle.rejected]: (state, action) => {
             state.fetching = false
             state.currentUser = null
-            state.error = action.payload
+            state.error = action.error
         },
 
         // -----------------------------------
@@ -167,7 +168,7 @@ export const userSlice = createSlice({
         [signOut.rejected]: (state, action) => {
             state.fetching = false
             state.currentUser = null
-            state.error = action.payload
+            state.error = action.error
         },
 
         // -----------------------------------
@@ -185,7 +186,7 @@ export const userSlice = createSlice({
         [signUp.rejected]: (state, action) => {
             state.fetching = false
             state.currentUser = null
-            state.error = action.payload
+            state.error = action.error
         }
     }
 })

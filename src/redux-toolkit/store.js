@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+
 import cartSlice from './cart/cartSlice'
 import directorySlice from './Directory/directorySlice'
 import shopSlice from './shop/shopSlice'
@@ -10,5 +11,8 @@ export const store = configureStore({
         shop: shopSlice,
         user: userSlice,
         cart: cartSlice
-    }
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false
+    })
 })

@@ -16,7 +16,7 @@ const Header = () => {
 
     const handleSignOut = () => {
         dispatch(signOut()).then(res => {
-            if (res.meta.requestStatus === 'fulfilled') {
+            if (res.payload === 'success') {
                 toast.success('You Successfully Signed Out', {
                     position: "top-right",
                     autoClose: 1500,
@@ -48,7 +48,6 @@ const Header = () => {
             </Link>
             <div className='options'>
                 <Link className='option' to='/shop'>SHOP</Link>
-                <Link className='option' to='/shop'>CONTACT</Link>
                 {user.currentUser?.id ?
                     <div className='option' onClick={handleSignOut}>SIGN OUT</div>
                     :
